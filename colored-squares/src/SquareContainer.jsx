@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { choice } from './helpers';
+import Square from './Square';
 
 class SquareContainer extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class SquareContainer extends Component {
         return (
             <div className='square-cointainer'>
                 <h1>Part 1</h1>
-                {this.state.colors.map((color, idx) => <div key={idx} onClick={this.clickListenHandler.bind(this, idx)} className="square" style={{backgroundColor: color}}/>)}
+                {this.state.colors.map((color, idx) => <Square key={idx} color={color} listener={this.clickListenHandler.bind(this, idx)} />)}
             </div>
         )
     }
