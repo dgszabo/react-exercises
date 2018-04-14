@@ -32,7 +32,7 @@ class CoinTable extends Component {
             <div className="coin-table">
                 <h1>Part 2</h1>
                 <h3>Let's flip a coin!</h3>
-                <img className="coin-img" src={this.state.coinState} />
+                <img className="coin-img" src={this.state.coinState} alt="" />
                 <button type="submit" onClick={this.handleFlip}>Flip Me!</button>
                 <p>Out of {this.state.headTracker + this.state.tailTracker} flips, there have been {this.state.headTracker} heads and {this.state.tailTracker}!</p>
             </div>
