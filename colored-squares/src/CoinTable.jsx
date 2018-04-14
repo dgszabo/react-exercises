@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { choice } from './helpers';
-import heads from './heads.png'
-import tails from './tails.png'
+import heads from './heads.png';
+import tails from './tails.png';
+import Coin from './Coin';
+import Caption from './Caption';
+import CoinButton from './CoinButton';
 
 class CoinTable extends Component {
     constructor(props) {
@@ -32,9 +35,9 @@ class CoinTable extends Component {
             <div className="coin-table">
                 <h1>Part 2</h1>
                 <h3>Let's flip a coin!</h3>
-                <img className="coin-img" src={this.state.coinState} alt="" />
-                <button type="submit" onClick={this.handleFlip}>Flip Me!</button>
-                <p>Out of {this.state.headTracker + this.state.tailTracker} flips, there have been {this.state.headTracker} heads and {this.state.tailTracker}!</p>
+                <Coin src={this.state.coinState} />
+                <CoinButton push={this.handleFlip} />
+                <Caption headCount={this.state.headTracker} tailCount={this.state.tailTracker} />
             </div>
         )
     }
