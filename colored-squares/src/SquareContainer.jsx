@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import choice from './helpers';
+import { choice } from './helpers';
 
 class SquareContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            colors: [choice(this.props.allColors)]
+            colors: Array.from({length: 24}).map(() => choice(this.props.allColors))
         }
     }
     
     render() {
         return (
-            <div className='square'>
-                <h1>Hello</h1>
+            <div className='square-cointainer'>
+                <h1>Part 1</h1>
+                {this.state.colors.map(color => <div className="square" style={{backgroundColor: color}}/>)}
             </div>
         )
     }
