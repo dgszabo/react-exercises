@@ -9,11 +9,19 @@ class SquareContainer extends Component {
         }
     }
     
+    clickListenHandler(index) {
+        this.setState(prevState => {
+            let colors = prevState.colors;
+            colors[index] = choice(this.props.allColors);
+            return { colors };
+        });
+    }
+
     render() {
         return (
             <div className='square-cointainer'>
                 <h1>Part 1</h1>
-                {this.state.colors.map(color => <div className="square" style={{backgroundColor: color}}/>)}
+                {this.state.colors.map((color, idx) => <div key={idx} onClick={this.clickListenHandler.bind(this, idx)} className="square" style={{backgroundColor: color}}/>)}
             </div>
         )
     }
