@@ -34,3 +34,12 @@
   margin: 3.5px;
   border: solid 0.5px grey;
 }
+
+.coin-img {
+  max-width: 150px;
+}
+
+button {
+  display: block;
+  margin: auto;
+}
