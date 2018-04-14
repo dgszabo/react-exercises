@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import choice from './choice';
+import choice from './helpers';
 
 class SquareContainer extends Component {
     constructor(props) {
@@ -10,14 +10,15 @@ class SquareContainer extends Component {
     }
     
     render() {
-        
-        <div className='square'>
-            <h1>Hello</h1>
-        </div>
+        return (
+            <div className='square'>
+                <h1>Hello</h1>
+            </div>
+        )
     }
 }
 
-SquareContainer.defaultProps {
+SquareContainer.defaultProps = {
     allColors: [
         "Bisque",
         "BlanchedAlmond",
@@ -41,4 +42,4 @@ SquareContainer.defaultProps {
       ]
 }
 
-export default Square;
+export default SquareContainer;

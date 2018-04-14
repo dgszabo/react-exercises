@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Square from './Square'
+import SquareContainer from './SquareContainer'
 
 class App extends Component {
   render() {
@@ -12,7 +12,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to color squares</h1>
         </header>
         <div className="square-container">
-            <Square />
+            <SquareContainer />
         </div>
       </div>
     );
