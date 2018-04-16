@@ -6,21 +6,7 @@ class TodoList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            todos: [{
-                title: "dishes",
-                description: "wash the dishes",
-                isCompleted: 0
-            },
-            {
-                title: "dog",
-                description: "walk the dog",
-                isCompleted: 0
-            },
-            {
-                title: "laundry",
-                description: "do the laundry",
-                isCompleted: 0
-            }]
+            todos: [ ]
         }
         this.addTodo = this.addTodo.bind(this);
     }
