@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Todo = ({ title, description, deleteTodo, markCompleted }) => (
-    <li className="list-group-item mx-auto">
+const Todo = ({ title, description, deleteTodo, markCompleted, completionStatus }) => (
+    <li className="list-group-item mx-auto" style={{textDecoration: completionStatus}}>
         <div className="d-flex">
             <span>
                 <h3 className="todo-title">{title}</h3>
