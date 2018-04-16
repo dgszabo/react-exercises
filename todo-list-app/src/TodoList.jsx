@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Todo from './Todo';
+import NewTodoForm from './NewTodoForm';
 
 class TodoList extends Component {
     constructor(props) {
@@ -21,6 +22,14 @@ class TodoList extends Component {
                 isCompleted: 0
             }]
         }
+        this.addTodo = this.addTodo.bind(this);
+    }
+
+    addTodo(newTodo) {
+        newTodo.isCompleted = 0;
+        this.setState(prevState => {
+          return { todos: [newTodo, ...prevState.todos] }
+        });
     }
 
     markCompleted(i) {
@@ -44,6 +53,7 @@ class TodoList extends Component {
     render() {
         return (
             <div className="container m-1">
+                <NewTodoForm addTodo={this.addTodo} />
                 <ul className="list-group text-center">
                     {this.state.todos.map((todo, i) => <Todo key={i} title={todo.title} description={todo.description} completionStatus={this.props.completionStatus[this.state.todos[i].isCompleted]} markCompleted={this.markCompleted.bind(this, i)} deleteTodo={this.deleteTodo.bind(this, i)} />)}
                 </ul>
