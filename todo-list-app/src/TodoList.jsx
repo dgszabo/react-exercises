@@ -32,7 +32,7 @@ class TodoList extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container m-1">
                 <ul className="list-group text-center">
                     {this.state.todos.map((todo, i) => <Todo key={i} title={todo.title} description={todo.description} markCompleted={this.markCompleted} deleteTodo={this.deleteTodo.bind(this, i)} />)}
                 </ul>
