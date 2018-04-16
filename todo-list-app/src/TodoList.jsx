@@ -5,15 +5,36 @@ class TodoList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            todos: ["wash the dishes", "walk the dog", "do the laundry"]
+            todos: [{
+                title: "dishes",
+                description: "wash the dishes"
+            },
+            {
+                title: "dog",
+                description: "walk the dog"
+            },
+            {
+                title: "laundry",
+                description: "do the laundry"
+            }]
         }
+    }
+
+    markCompleted(event) {
+        event.target.closest('.list-group-item').style.textDecoration = 'line-through';
+    }
+    
+    deleteTodo(i) {
+        let newTodos = [...this.state.todos];
+        newTodos.splice(i, 1);
+        this.setState({todos: newTodos});
     }
 
     render() {
         return (
             <div className="container">
                 <ul className="list-group text-center">
-                    {this.state.todos.map((txt, i) => <Todo key={i} text={txt} />)}
+                    {this.state.todos.map((todo, i) => <Todo key={i} title={todo.title} description={todo.description} markCompleted={this.markCompleted} deleteTodo={this.deleteTodo.bind(this, i)} />)}
                 </ul>
             </div>
         )
