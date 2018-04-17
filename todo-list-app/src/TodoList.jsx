@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Todo from './Todo';
 import NewTodoForm from './NewTodoForm';
+import EditTodoForm from './EditTodoForm';
 
 class TodoList extends Component {
     constructor(props) {
@@ -9,22 +10,26 @@ class TodoList extends Component {
             todos: [{
                 title: "dishes",
                 description: "wash the dishes",
-                isCompleted: false
+                isCompleted: false,
+                isUnderEdit: false,
             },
             {
                 title: "dog",
                 description: "walk the dog",
-                isCompleted: false
+                isCompleted: false,
+                isUnderEdit: false,
             },
             {
                 title: "laundry",
                 description: "do the laundry",
-                isCompleted: false
+                isCompleted: false,
+                isUnderEdit: false,
             }],
             isOpen: false,
         }
         this.addTodo = this.addTodo.bind(this);
         this.toggleForm = this.toggleForm.bind(this);
+        this.closeEditor = this.closeEditor.bind(this);
     }
 
     toggleForm() {
@@ -60,6 +65,32 @@ class TodoList extends Component {
             return newState;
         });
     }
+
+    openEditor(i) {
+        this.setState((prevState) => {
+            let newState = {...prevState}
+            newState.todos.map(el => el.isUnderEdit = false)
+            newState.todos[i].isUnderEdit = true;
+            return newState;
+        });
+    }
+
+    closeEditor() {
+        this.setState((prevState) => {
+            let newState = {...prevState}
+            newState.todos.map(el => el.isUnderEdit = false)
+            return newState;
+        });
+    }
+
+    editTodo(i) {
+        this.setState((prevState) => {
+            let newState = {...prevState}
+            newState.todos.map(el => el.isUnderEdit = false)
+            newState.todos[i].isUnderEdit = true;
+            return newState;
+        });
+    }
     
     deleteTodo(i) {
         let newTodos = [...this.state.todos];
@@ -73,7 +104,17 @@ class TodoList extends Component {
                 <button className="btn btn-secondary btn-lg form-opener" onClick={this.toggleForm}>{this.state.isOpen ? "Close todo form" : "Open todo form"}</button>
                 <NewTodoForm isOpen={this.state.isOpen} addTodo={this.addTodo} />
                 <ul className="list-group text-center">
-                    {this.state.todos.map((todo, i) => <Todo key={i} title={todo.title} description={todo.description} completionStatus={this.state.todos[i].isCompleted} markCompleted={this.markCompleted.bind(this, i)} deleteTodo={this.deleteTodo.bind(this, i)} />)}
+                    {this.state.todos.map((todo, i) => {
+                        if(this.state.todos[i].isUnderEdit) {
+                            return (
+                                <EditTodoForm key={i} closeEditor={this.closeEditor.bind(this)} editTodo={this.editTodo.bind(this, i)} title={todo.title} description={todo.description} />
+                            )
+                        } else {
+                            return (
+                                <Todo key={i} title={todo.title} description={todo.description} completionStatus={this.state.todos[i].isCompleted} markCompleted={this.markCompleted.bind(this, i)} deleteTodo={this.deleteTodo.bind(this, i)} openEditor={this.openEditor.bind(this, i)} />
+                            )
+                        }
+                    })}
                 </ul>
             </div>
         )
