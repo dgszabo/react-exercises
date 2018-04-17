@@ -7,29 +7,28 @@ class TodoList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            todos: [{
-                title: "dishes",
-                description: "wash the dishes",
-                isCompleted: false,
-                isUnderEdit: false,
-            },
-            {
-                title: "dog",
-                description: "walk the dog",
-                isCompleted: false,
-                isUnderEdit: false,
-            },
-            {
-                title: "laundry",
-                description: "do the laundry",
-                isCompleted: false,
-                isUnderEdit: false,
-            }],
+            todos: [ ],
             isOpen: false,
         }
         this.addTodo = this.addTodo.bind(this);
         this.toggleForm = this.toggleForm.bind(this);
         this.closeEditor = this.closeEditor.bind(this);
+    }
+
+    componentDidMount() {
+        if(localStorage.todos) {
+            let todos = JSON.parse(localStorage.todos);
+            this.setState(prevState => {
+                let newState = {...prevState}
+                newState.todos = [...todos];
+                return newState;
+            });
+        }
+    }
+
+    componentDidUpdate() {
+        let todosString = JSON.stringify(this.state.todos);
+        localStorage.setItem('todos', todosString);
     }
 
     toggleForm() {
