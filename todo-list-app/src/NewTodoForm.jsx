@@ -12,7 +12,7 @@ class NewTodoForm extends Component {
     
     render() {
         return (
-            <form className="mx-auto my-3 text-left todo-form" onSubmit={this.handleSubmit.bind(this)}>
+            <form className={this.props.isOpen ? "mx-auto my-3 text-left todo-form" : "mx-auto my-3 text-left todo-form hide"}  onSubmit={this.handleSubmit.bind(this)}>
                 <div className="form-group">
                     <label className="mb-0">Title</label>
                     <input type="text" className="form-control" id="title" name="title" placeholder="Enter title of todo" required />
