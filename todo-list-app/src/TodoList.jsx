@@ -83,11 +83,12 @@ class TodoList extends Component {
         });
     }
 
-    editTodo(i) {
+    editTodo(i, editedTodo) {
         this.setState((prevState) => {
             let newState = {...prevState}
             newState.todos.map(el => el.isUnderEdit = false)
-            newState.todos[i].isUnderEdit = true;
+            newState.todos[i].title = editedTodo.title;
+            newState.todos[i].description = editedTodo.description;
             return newState;
         });
     }
