@@ -107,7 +107,7 @@ class TodoList extends Component {
                     {this.state.todos.map((todo, i) => {
                         if(this.state.todos[i].isUnderEdit) {
                             return (
-                                <EditTodoForm key={i} closeEditor={this.closeEditor.bind(this)} editTodo={this.editTodo.bind(this, i)} title={todo.title} description={todo.description} />
+                                <EditTodoForm key={i} closeEditor={this.closeEditor.bind(this)} editTodo={this.editTodo.bind(this, i)} todo={todo} />
                             )
                         } else {
                             return (
