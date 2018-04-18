@@ -3,8 +3,29 @@ import logo from './logo.svg';
 import './App.css';
 import { Route, Link } from 'react-router-dom'
 import AllTrucks from './AllTrucks'
+import NewTruckForm from './NewTruckForm'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+        trucks: [{
+            name: "Trailer",
+            url: "https://www.fleetboard.info/fileadmin/02_module_backgrounds/iconslider_background_trailer_03.jpg",
+            awesomeness: 6
+        }]
+    }
+    this.addTruck = this.addTruck.bind(this)
+  }
+
+  addTruck(newTruck) {
+      this.setState(prevState => {
+          let newState = {...prevState}
+          newState.trucks = [newTruck, ...prevState.trucks];
+          return newState;
+      });
+  }
+  
   render() {
     return (
       <div className="App">
@@ -32,7 +53,11 @@ class App extends Component {
         <div className="container"></div>
 
         {/* ROUTES */}
-        <Route path="/" component={AllTrucks} />
+        <div className="container">
+          <Route path="/" exact component={AllTrucks} />
+          <Route path="/new" component={NewTruckForm} />
+        </div>
+        
       </div>
     );
   }
