@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Truck from './Truck'
 
 class NewTruckForm extends Component {
     constructor(props) {
@@ -11,13 +10,6 @@ class NewTruckForm extends Component {
         }
         this.handleChange = this.handleChange.bind(this)
     }
-    
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     return {
-    //       title: nextProps.todo.title,
-    //       description: nextProps.todo.description,
-    //     }
-    // }
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
@@ -26,10 +18,11 @@ class NewTruckForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.props.addTruck({
-            title: this.state.name,
+            name: this.state.name,
             url: this.state.url,
             awesomeness: this.state.awesomeness,
         });
+        this.props.history.push('/');
     }
     
     render() {

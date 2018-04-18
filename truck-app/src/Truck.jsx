@@ -2,7 +2,7 @@ import React from 'react';
 
 const Truck = ({name, url, awesomeness}) => {
     return (
-        <div className="card m-4" style={{width: "22rem"}}>
+        <div className="card mx-3 my-auto align-items-center" style={{width: "20rem"}}>
             <div className="card-title text-center">
                 <h5 className="card-title mt-4">{name}</h5>
             </div>

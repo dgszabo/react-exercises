@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Route, Link } from 'react-router-dom'
 import AllTrucks from './AllTrucks'
@@ -9,11 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-        trucks: [{
-            name: "Trailer",
-            url: "https://www.fleetboard.info/fileadmin/02_module_backgrounds/iconslider_background_trailer_03.jpg",
-            awesomeness: 6
-        }]
+        trucks: [ ]
     }
     this.addTruck = this.addTruck.bind(this)
   }
@@ -25,16 +20,29 @@ class App extends Component {
           return newState;
       });
   }
+
+  componentDidMount() {
+    if(localStorage.trucks) {
+      let trucks = JSON.parse(localStorage.getItem('trucks'));
+      this.setState({ trucks })
+    }
+  }
+
+  componentDidUpdate() {
+    let trucks = JSON.stringify(this.state.trucks);
+    localStorage.setItem('trucks', trucks);
+  }
+
   
   render() {
     return (
       <div className="App">
         {/* NAVBAR */}
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a className="navbar-brand" href="#">
+          <Link className="navbar-brand" to="/">
             <i className="fas fa-truck-moving"></i>
             <span className="ml-1">truckU</span>
-          </a>
+          </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -54,8 +62,8 @@ class App extends Component {
 
         {/* ROUTES */}
         <div className="container">
-          <Route path="/" exact component={AllTrucks} />
-          <Route path="/new" component={NewTruckForm} />
+          <Route path="/" exact render={props => <AllTrucks trucks={this.state.trucks} {...props} />} />
+          <Route path="/new" render={props => <NewTruckForm addTruck={this.addTruck} {...props} />} />
         </div>
         
       </div>
