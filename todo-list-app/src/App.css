@@ -60,3 +60,24 @@ li.completed:hover {
   right: 10px;
   top: 10px;
 }
+
+.all-todos-btn, .new-todo-btn {
+  border-radius: 0px;
+  position: relative;
+  display: block;
+}
+
+.all-todos-btn {
+  margin-bottom: 1px;
+  border-top-left-radius: 15px;
+}
+
+.new-todo-btn {
+  border-bottom-left-radius: 15px;
+}
+
+.nav-btns {
+  position: fixed;
+  right: 0;
+  top: 38px;
+}
