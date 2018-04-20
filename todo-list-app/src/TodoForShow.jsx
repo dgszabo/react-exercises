@@ -2,6 +2,7 @@ import React from 'react';
 import { Link }from 'react-router-dom';
 
 const TodoForShow = ({ title, description, deleteTodo, markCompleted, completionStatus, goToEdit, idx }) => (
+    
     <li className={completionStatus ? "list-group-item mx-auto completed" : "list-group-item mx-auto"}>
         <div className="d-flex">
             <span>

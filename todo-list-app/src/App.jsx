@@ -18,7 +18,6 @@ class App extends Component {
     this.closeEditor = this.closeEditor.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this);
     this.openEditor = this.openEditor.bind(this);
-    this.goToEdit = this.goToEdit.bind(this);
     this.editTodo = this.editTodo.bind(this);
   }
 
@@ -60,25 +59,21 @@ markCompleted(i) {
     });
   }
 
-  openEditor(i) {
-      this.setState((prevState) => {
-          let newState = {...prevState}
-          newState.todos.map(el => el.isUnderEdit = false)
-          newState.todos[i].isUnderEdit = true;
-          return newState;
-      });
-  }
-  
-  goToEdit(i) {
-      return <Redirect to={`/todos/${i}/edit`} />
-  }
+openEditor(i) {
+    this.setState((prevState) => {
+        let newState = {...prevState}
+        newState.todos.map(el => el.isUnderEdit = false)
+        newState.todos[i].isUnderEdit = true;
+        return newState;
+    });
+}
 
   closeEditor() {
-      this.setState((prevState) => {
-          let newState = {...prevState}
-          newState.todos.map(el => el.isUnderEdit = false)
-          return newState;
-      });
+    this.setState((prevState) => {
+        let newState = {...prevState}
+        newState.todos.map(el => el.isUnderEdit = false)
+        return newState;
+    });
   }
 
   editTodo(i, editedTodo) {
