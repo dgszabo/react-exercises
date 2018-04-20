@@ -4,6 +4,7 @@ import './App.css';
 import TodoList from './TodoList';
 import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import NewTodoForm from './NewTodoForm';
+import TodoShow from './TodoShow';
 
 class App extends Component {
   constructor(props) {
@@ -104,6 +105,7 @@ markCompleted(i) {
         </header>
         <Switch>
           <Route path="/todos/new" render={props => <NewTodoForm addTodo={this.addTodo} {...props} />} />
+          <Route path="/todos/:id" render={routeProps => <TodoShow todo={this.state.todos[routeProps.match.params.id]} editTodo={this.editTodo} idx={routeProps.match.params.id} deleteTodo={this.deleteTodo} openEditor={this.openEditor} markCompleted={this.markCompleted} {...routeProps} />} />
           <Route path="/todos" render={props => <TodoList todos={this.state.todos} editTodo={this.editTodo} deleteTodo={this.deleteTodo} openEditor={this.openEditor} markCompleted={this.markCompleted} {...props} />} />
           <Redirect to="/todos" />
         </Switch>

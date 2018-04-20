@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link }from 'react-router-dom';
 
-const Todo = ({ title, description, deleteTodo, markCompleted, completionStatus, openEditor }) => (
+const Todo = ({ title, description, deleteTodo, markCompleted, completionStatus, openEditor, idx }) => (
     <li className={completionStatus ? "list-group-item mx-auto completed" : "list-group-item mx-auto"}>
         <div className="d-flex">
             <span>
-                <h3 className="todo-title">{title}</h3>
+                <h3 className="todo-title">
+                    <Link to={`/todos/${idx}`}>{title}</Link>
+                </h3>
             </span>
             <span className="ml-auto my-auto">
                 <button className="btn btn-success btn-sm m-1" onClick={markCompleted}>
