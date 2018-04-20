@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom';
 
 class TodoShow extends Component {
     goToEdit(i) {
-        console.log('you pushed the button in TodoShow')
         this.props.history.push(`/todos/${i}/edit`)  
     }
     

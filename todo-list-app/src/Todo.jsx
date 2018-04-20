@@ -4,7 +4,9 @@ import { Link }from 'react-router-dom';
 class Todo extends Component {
     handleDelete = () => {
         this.props.deleteTodo();
-        this.props.routeProps.history.push('/todos')
+        if(this.props.routeProps) {
+            this.props.routeProps.history.push('/todos')
+        }
     }
     
     render() {

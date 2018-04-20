@@ -12,9 +12,18 @@ class EditTodoShow extends Component {
     }
     
     static getDerivedStateFromProps(nextProps, prevState) {
+        let todo;
+        if(!nextProps.todo) {
+            if(JSON.parse(localStorage.getItem('todos'))[nextProps.match.params.id]) {
+                todo = JSON.parse(localStorage.getItem('todos'))[nextProps.match.params.id];
+            } else {
+                return <Redirect to="/todos" />
+            }
+        }
+        
         return {
-          title: nextProps.todo.title,
-          description: nextProps.todo.description,
+          title: todo || nextProps.todo.title,
+          description: todo || nextProps.todo.description,
         }
     }
 
@@ -28,6 +37,7 @@ class EditTodoShow extends Component {
             title: this.state.title,
             description: this.state.description,
         });
+        this.props.history.push(`/todos/${this.props.match.params.id}`)
     }
     
     render() {

@@ -106,7 +106,7 @@ openEditor(i) {
         </header>
         <Switch>
           <Route path="/todos/new" render={props => <NewTodoForm addTodo={this.addTodo} {...props} />} />
-          <Route path="/todos/:id/edit" render={routeProps => <TodoShowEdit todo={this.state.todos[routeProps.match.params.id]} editTodo={this.editTodo} deleteTodo={this.deleteTodo} openEditor={this.openEditor} markCompleted={this.markCompleted} {...routeProps} />} />
+          <Route path="/todos/:id/edit" render={routeProps => <TodoShowEdit todo={this.state.todos[routeProps.match.params.id]} editTodo={this.editTodo.bind(this, routeProps.match.params.id)} deleteTodo={this.deleteTodo} openEditor={this.openEditor} markCompleted={this.markCompleted} {...routeProps} />} />
           <Route path="/todos/:id" render={routeProps => <TodoShow todo={this.state.todos[routeProps.match.params.id]} editTodo={this.editTodo} deleteTodo={this.deleteTodo} goToEdit={this.goToEdit} markCompleted={this.markCompleted} {...routeProps} />} />
           <Route path="/todos" render={props => <TodoList todos={this.state.todos} editTodo={this.editTodo} deleteTodo={this.deleteTodo} openEditor={this.openEditor} markCompleted={this.markCompleted} {...props} />} />
           <Redirect to="/todos" />
