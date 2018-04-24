@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Todo from './Todo';
-import EditTodoForm from './EditTodoForm';
 import { Redirect } from 'react-router-dom';
 
 class TodoShow extends Component {
@@ -9,9 +8,8 @@ class TodoShow extends Component {
     }
     
     render() {
-        let { todo, editTodo, deleteTodo, markCompleted } = this.props;
+        let { todo, deleteTodo, markCompleted } = this.props;
         const idx = this.props.match.params.id;
-        let props = this.pr
         if(!todo) {
             if(JSON.parse(localStorage.getItem('todos'))[idx]) {
                 todo = JSON.parse(localStorage.getItem('todos'))[idx];

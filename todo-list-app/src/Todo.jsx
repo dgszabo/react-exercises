@@ -10,7 +10,7 @@ class Todo extends Component {
     }
     
     render() {
-        const { title, description, deleteTodo, markCompleted, completionStatus, openEditor, idx } = this.props;
+        const { title, description, markCompleted, completionStatus, openEditor, idx } = this.props;
         return (
             <li className={completionStatus ? "list-group-item mx-auto completed" : "list-group-item mx-auto"}>
                 <div className="d-flex">

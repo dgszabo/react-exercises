@@ -41,7 +41,7 @@ class EditTodoShow extends Component {
     }
     
     render() {
-        let { todo, editShowTodo } = this.props;
+        let { todo } = this.props;
         const idx = this.props.match.params.id; 
         if(!todo) {
             if(JSON.parse(localStorage.getItem('todos'))[idx]) {
