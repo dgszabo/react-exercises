@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from '../logo.svg';
 import './App.css';
-import TodoList from './TodoList';
+import TodoList from '../components/TodoList';
 import { Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
-import NewTodoForm from './NewTodoForm';
-import TodoShow from './TodoShow';
-import TodoShowEdit from './TodoShowEdit';
+import NewTodoForm from '../components/NewTodoForm';
+import TodoShow from '../components/TodoShow';
+import TodoShowEdit from '../components/TodoShowEdit';
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid/v1';
 
