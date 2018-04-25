@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TodoList from './TodoList';
-import { Route, Switch, Redirect, Link } from 'react-router-dom';
+import { Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
 import NewTodoForm from './NewTodoForm';
 import TodoShow from './TodoShow';
 import TodoShowEdit from './TodoShowEdit';
+import { connect } from 'react-redux';
+import uuidv1 from 'uuid/v1';
 
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-        todos: [ ],
-    }
+
     this.addTodo = this.addTodo.bind(this);
     this.markCompleted = this.markCompleted.bind(this);
     this.closeEditor = this.closeEditor.bind(this);
@@ -21,75 +21,80 @@ class App extends Component {
     this.editTodo = this.editTodo.bind(this);
   }
 
-  componentDidMount() {
-      if(localStorage.todos) {
-          let todos = JSON.parse(localStorage.todos);
-          this.setState(prevState => {
-              let newState = {...prevState}
-              newState.todos = [...todos];
-              return newState;
-          });
-      }
-  }
-
-  componentDidUpdate() {
-      let todosString = JSON.stringify(this.state.todos);
-      localStorage.setItem('todos', todosString);
-  }
-
   addTodo(newTodo) {
     newTodo.isCompleted = false;
-    this.setState(prevState => {
-        let newState = {...prevState}
-        newState.isOpen = false;
-        newState.todos = [newTodo, ...prevState.todos];
-        return newState;
+    newTodo.isUnderEdit = false;
+    newTodo.idx = uuidv1();
+    this.props.dispatch({
+        type: 'ADD_TODO',
+        payload: newTodo
     });
 }
 
 markCompleted(i) {
-    this.setState((prevState) => {
-        let newState = {...prevState}
-        if(newState.todos[i].isCompleted === false) {
-            newState.todos[i].isCompleted = true;
-        } else {
-            newState.todos[i].isCompleted = false;
+    let newTodos = this.props.todos.map(todo => {
+        if(todo.idx === i) {
+            todo.isCompleted = !todo.isCompleted;
         }
-        return newState;
+        return todo;
+    })
+    this.props.dispatch({
+        type: 'MOD_TODO',
+        payload: newTodos
     });
   }
 
 openEditor(i) {
-    this.setState((prevState) => {
-        let newState = {...prevState}
-        newState.todos.map(el => el.isUnderEdit = false)
-        newState.todos[i].isUnderEdit = true;
-        return newState;
+    let newTodos = this.props.todos.map(todo => {
+        if(todo.idx === i) {
+            todo.isUnderEdit = !todo.isUnderEdit;
+        }
+        return todo;
+    })
+    this.props.dispatch({
+        type: 'MOD_TODO',
+        payload: newTodos
     });
 }
 
   closeEditor() {
-    this.setState((prevState) => {
-        let newState = {...prevState}
-        newState.todos.map(el => el.isUnderEdit = false)
-        return newState;
+    let newTodos = this.props.todos.map(todo => {
+        todo.isUnderEdit = !todo.isUnderEdit;
+        return todo;
+    })
+    this.props.dispatch({
+        type: 'MOD_TODO',
+        payload: newTodos
     });
   }
 
   editTodo(i, editedTodo) {
-      this.setState((prevState) => {
-          let newState = {...prevState}
-          newState.todos.map(el => el.isUnderEdit = false)
-          newState.todos[i].title = editedTodo.title;
-          newState.todos[i].description = editedTodo.description;
-          return newState;
-      });
+    let newTodos = this.props.todos.map(todo => {
+        if(todo.idx === i) {
+            todo.title = editedTodo.title;
+            todo.description = editedTodo.description;
+            todo.isUnderEdit = false;
+        }
+        return todo;
+    })
+    this.props.dispatch({
+        type: 'MOD_TODO',
+        payload: newTodos
+    });  
+    // this.setState((prevState) => {
+    //       let newState = {...prevState}
+    //       newState.todos.map(el => el.isUnderEdit = false)
+    //       newState.todos[i].title = editedTodo.title;
+    //       newState.todos[i].description = editedTodo.description;
+    //       return newState;
+    //   });
   }
 
   deleteTodo(i) {
       let newTodos = [...this.state.todos];
       newTodos.splice(i, 1);
       this.setState({todos: newTodos});
+      this.props.history.push("/todos")
   }
 
   render() {
@@ -108,7 +113,7 @@ openEditor(i) {
           <Route path="/todos/new" render={props => <NewTodoForm addTodo={this.addTodo} {...props} />} />
           <Route path="/todos/:id/edit" render={routeProps => <TodoShowEdit todo={this.state.todos[routeProps.match.params.id]} editTodo={this.editTodo.bind(this, routeProps.match.params.id)} deleteTodo={this.deleteTodo} openEditor={this.openEditor} markCompleted={this.markCompleted} {...routeProps} />} />
           <Route path="/todos/:id" render={routeProps => <TodoShow todo={this.state.todos[routeProps.match.params.id]} editTodo={this.editTodo} deleteTodo={this.deleteTodo} goToEdit={this.goToEdit} markCompleted={this.markCompleted} {...routeProps} />} />
-          <Route path="/todos" render={props => <TodoList todos={this.state.todos} editTodo={this.editTodo} deleteTodo={this.deleteTodo} openEditor={this.openEditor} markCompleted={this.markCompleted} {...props} />} />
+          <Route path="/todos" render={props => <TodoList todos={this.props.todos} editTodo={this.editTodo} deleteTodo={this.deleteTodo} openEditor={this.openEditor} markCompleted={this.markCompleted} {...props} />} />
           <Redirect to="/todos" />
         </Switch>
       </div>
@@ -116,4 +121,11 @@ openEditor(i) {
   }
 }
 
-export default App;
+function mapStateToProps(reduxState) {
+    return {
+        ...reduxState
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(App));
+

@@ -6,8 +6,12 @@ const initialState = { todos: [
 
 export default function rootReducer(state = initialState, action) {
     switch(action.type) {
-        case 'something':
-            return state;
+        case 'MOD_TODO':
+            var newState = { todos: [...action.payload] };
+            return newState;
+        case 'ADD_TODO':
+            var newState = { todos: [ action.payload, ...state.todos ] };
+            return newState;
         default:
             return state;
     }

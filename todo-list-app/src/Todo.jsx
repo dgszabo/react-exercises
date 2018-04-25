@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 import { Link }from 'react-router-dom';
 
 class Todo extends Component {
-    handleDelete = () => {
-        this.props.deleteTodo();
-        if(this.props.routeProps) {
-            this.props.routeProps.history.push('/todos')
-        }
-    }
-    
     render() {
         const { title, description, markCompleted, completionStatus, openEditor, idx } = this.props;
         return (
@@ -26,7 +19,7 @@ class Todo extends Component {
                         <button className="btn btn-warning btn-sm m-1" onClick={openEditor}>
                             {<i className="fas fa-edit"></i>}
                         </button>
-                        <button className="btn btn-danger btn-sm m-1" onClick={this.handleDelete}>
+                        <button className="btn btn-danger btn-sm m-1" onClick={this.props.deleteTodo}>
                             <i className="fas fa-times"></i>
                         </button>
                     </span>
