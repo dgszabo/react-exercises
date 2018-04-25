@@ -81,22 +81,15 @@ openEditor(i) {
         type: 'MOD_TODO',
         payload: newTodos
     });  
-    // this.setState((prevState) => {
-    //       let newState = {...prevState}
-    //       newState.todos.map(el => el.isUnderEdit = false)
-    //       newState.todos[i].title = editedTodo.title;
-    //       newState.todos[i].description = editedTodo.description;
-    //       return newState;
-    //   });
   }
 
   deleteTodo(i) {
-      let newTodos = [...this.state.todos];
-      newTodos.splice(i, 1);
-      this.setState({todos: newTodos});
-      this.props.history.push("/todos")
+    let newTodos = this.props.todos.filter(todo => todo.idx !== i)
+    this.props.dispatch({
+        type: 'DEL_TODO',
+        payload: newTodos
+    });  
   }
-
   render() {
     return (
       <div className="App">
@@ -111,8 +104,8 @@ openEditor(i) {
         </header>
         <Switch>
           <Route path="/todos/new" render={props => <NewTodoForm addTodo={this.addTodo} {...props} />} />
-          <Route path="/todos/:id/edit" render={routeProps => <TodoShowEdit todo={this.state.todos[routeProps.match.params.id]} editTodo={this.editTodo.bind(this, routeProps.match.params.id)} deleteTodo={this.deleteTodo} openEditor={this.openEditor} markCompleted={this.markCompleted} {...routeProps} />} />
-          <Route path="/todos/:id" render={routeProps => <TodoShow todo={this.state.todos[routeProps.match.params.id]} editTodo={this.editTodo} deleteTodo={this.deleteTodo} goToEdit={this.goToEdit} markCompleted={this.markCompleted} {...routeProps} />} />
+          <Route path="/todos/:id/edit" render={routeProps => <TodoShowEdit todo={this.props.todos.filter(todo => todo.idx === routeProps.match.params.id)[0]} editTodo={this.editTodo.bind(this, routeProps.match.params.id)} deleteTodo={this.deleteTodo} openEditor={this.openEditor} markCompleted={this.markCompleted} {...routeProps} />} />
+          <Route path="/todos/:id" render={routeProps => <TodoShow todo={this.props.todos.filter(todo => todo.idx === routeProps.match.params.id)[0]} editTodo={this.editTodo} deleteTodo={this.deleteTodo} goToEdit={this.goToEdit} markCompleted={this.markCompleted} {...routeProps} />} />
           <Route path="/todos" render={props => <TodoList todos={this.props.todos} editTodo={this.editTodo} deleteTodo={this.deleteTodo} openEditor={this.openEditor} markCompleted={this.markCompleted} {...props} />} />
           <Redirect to="/todos" />
         </Switch>

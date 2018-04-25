@@ -41,6 +41,7 @@ class EditTodoShow extends Component {
     }
     
     render() {
+        debugger;
         let { todo } = this.props;
         const idx = this.props.match.params.id; 
         if(!todo) {

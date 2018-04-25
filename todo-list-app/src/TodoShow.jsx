@@ -8,8 +8,9 @@ class TodoShow extends Component {
     }
     
     render() {
-        let { todo, deleteTodo, markCompleted } = this.props;
         const idx = this.props.match.params.id;
+        let { todo, deleteTodo, markCompleted } = this.props;
+        
         if(!todo) {
             if(JSON.parse(localStorage.getItem('todos'))[idx]) {
                 todo = JSON.parse(localStorage.getItem('todos'))[idx];
