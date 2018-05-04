@@ -84,28 +84,19 @@ class App extends Component {
   
   render() {
     let playOrGameOverArea = () => {
-      if(this.state.livesLeft > 0) {
-        return (
-          <div>
-            <h2>Take a guess!</h2>
-            <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="guess">Your guess</label>
-              <input type="text" className="form-control" name="guess" id="guess" aria-describedby="inputLetter" placeholder="Enter letter" maxLength="1" onChange={this.handleChange} />
-              <small id="guess" className="form-text text-muted">You can enter one letter of the English alphabet</small>
-            </div>
-            <button className="btn btn-secondary btn-sm" type="submit">Submit your guess!</button>
-            </form>
-          </div>
-        )
-      } else {
-        return (
+      return (
         <div>
-          <h2>Game over!</h2>
-          <h4>Better luck next time!</h4>
+          <h2>Take a guess!</h2>
+          <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="guess">Your guess</label>
+            <input type="text" className="form-control" name="guess" id="guess" aria-describedby="inputLetter" placeholder="Enter letter" maxLength="1" onChange={this.handleChange} />
+            <small id="guess" className="form-text text-muted">You can enter one letter of the English alphabet</small>
+          </div>
+          <button className="btn btn-secondary btn-sm" type="submit">Submit your guess!</button>
+          </form>
         </div>
-        )
-      }
+      ) 
     }
 
     let wrongLetterMessage = () => {
@@ -125,6 +116,24 @@ class App extends Component {
       )
     }
 
+    let youLostScreen = () => {
+      return (
+        <div className="cover">
+          <div className="youLostMsg">
+            <h1>Sorry, you lost!</h1>
+            <h2>Better luck next time!</h2>
+            <button className="btn btn-info btn-lg" onClick={this.restart}>New game</button>
+          </div>
+        </div>
+      )
+    }
+
+    let displayedLetters = this.state.word.split('').map(el => {
+      if(this.state.letters[el] === 0) {
+        <div className="letter-holder"></div>
+      }
+    })
+
     return (
       <div className="App">
         <div className="container">
@@ -135,6 +144,7 @@ class App extends Component {
           <h3>You have {this.state.livesLeft} lives left!</h3>
         </div>
         {this.state.youWon ? youWonScreen() : ""}
+        {this.state.livesLeft ? "" : youLostScreen()}
       </div>
     );
   }

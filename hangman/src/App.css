@@ -39,8 +39,11 @@
   align-items: center;
 }
 
-.cover h1 {
+.cover h1, .cover h2 {
   font-size: 400%;
   color: white;
+}
+
+.cover h2 {
   margin-bottom: 50px;
 }
