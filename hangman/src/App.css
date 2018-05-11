@@ -47,3 +47,33 @@
 .cover h2 {
   margin-bottom: 50px;
 }
+
+.letter-holder {
+  width: 35px;
+  border-bottom: 2px black solid;
+  margin: 2px;
+}
+
+.letter-holder h1 {
+  opacity: 0;
+}
+
+.visible h1 {
+  opacity: 1;
+}
+
+.key {
+  width: 50px;
+  height: 50px;
+  border: 1px gray solid;
+  border-radius: 5px;
+  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: row;
+}

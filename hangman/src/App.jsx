@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Key from './Key'
 
 class App extends Component {
   constructor(props) {
@@ -11,9 +12,10 @@ class App extends Component {
       guess: "",
       youWon: false,
       lastWrongLetter: "",
+      guessedLetters: [],
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
     this.restart = this.restart.bind(this);
   }
 
@@ -30,30 +32,63 @@ class App extends Component {
     this.setState({ word, letters })
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
+  // handleChange(event) {
+  //   this.setState({ [event.target.name]: event.target.value });
+  // }
 
-  handleSubmit(event) {
+  // handleSubmit(event) {
+  //   event.preventDefault();
+  //   let guess = this.state.guess.toLowerCase();
+  //   event.target.reset();
+  //   if(this.state.letters[guess] && this.state.letters[guess] > 0) {
+  //     this.setState(prevState => {
+  //       let newState = {...prevState}
+  //       newState.letters[guess] = 0;
+  //       newState.lastWrongLetter = "";
+  //       let score = Object.values(this.state.letters).reduce((sum, a) => {return sum + a}, 0)
+  //       if(score === 0) {
+  //         newState.youWon = true;
+  //       }
+  //       return newState;
+  //     });
+  //   } else {
+  //     this.setState(prevState => {
+  //       let newState = {...prevState};
+  //       newState.lastWrongLetter = guess;
+  //       newState.livesLeft--;
+  //       return newState;
+  //     });
+  //   }
+  // }
+
+  handleKeyPress(key, event) {
     event.preventDefault();
-    let guess = this.state.guess.toLowerCase();
-    event.target.reset();
-    if(this.state.letters[guess] && this.state.letters[guess] > 0) {
-      this.setState(prevState => {
-        let newState = {...prevState}
-        newState.letters[guess] = 0;
-        newState.lastWrongLetter = "";
-        let score = Object.values(this.state.letters).reduce((sum, a) => {return sum + a}, 0)
-        if(score === 0) {
-          newState.youWon = true;
-        }
-        return newState;
-      });
+    if(!this.state.guessedLetters.includes(key)) {
+      if(this.state.letters[key] && this.state.letters[key] > 0) {
+        this.setState(prevState => {
+          let newState = {...prevState}
+          newState.letters[key] = 0;
+          newState.guessedLetters.push(key);
+          newState.lastWrongLetter = "";
+          let score = Object.values(this.state.letters).reduce((sum, a) => {return sum + a}, 0)
+          if(score === 0) {
+            newState.youWon = true;
+          }
+          return newState;
+        });
+      } else {
+        this.setState(prevState => {
+          let newState = {...prevState};
+          newState.guessedLetters.push(key);
+          newState.lastWrongLetter = key;
+          newState.livesLeft--;
+          return newState;
+        });
+      }
     } else {
       this.setState(prevState => {
         let newState = {...prevState};
-        newState.lastWrongLetter = guess;
-        newState.livesLeft--;
+        newState.lastWrongLetter = key;
         return newState;
       });
     }
@@ -68,6 +103,7 @@ class App extends Component {
       guess: "",
       youWon: false,
       lastWrongLetter: "",
+      guessedLetters: [],
     }
     newState.word = this.props.words[Math.floor(this.props.words.length * Math.random())];
     let letters = newState.letters
@@ -128,20 +164,39 @@ class App extends Component {
       )
     }
 
-    let displayedLetters = this.state.word.split('').map(el => {
-      if(this.state.letters[el] === 0) {
-        <div className="letter-holder"></div>
+    let displayedLetters = this.state.word.split('').map(letter => {
+      if(this.state.letters[letter] === 0) {
+        return (
+        <div className="letter-holder visible">
+          <h1>{letter}</h1>
+        </div>
+        )
+      } else {
+        return (
+        <div className="letter-holder">
+          <h1>{letter}</h1>
+        </div>
+        )
       }
     })
 
     return (
       <div className="App">
         <div className="container">
-          {playOrGameOverArea()}
+          <h2>Take a guess!</h2>
+          <br/>
+            <div className="row letter-row d-flex justify-content-center">
+              {displayedLetters}
+            </div>
           <br/>
             {wrongLetterMessage()}
           <br/>
           <h3>You have {this.state.livesLeft} lives left!</h3>
+          <div className="container keyboard">
+            <div className="row">
+              {this.props.alphabet.map(letter => <Key letter={letter} keyPress={this.handleKeyPress.bind(this, letter)} />)}
+            </div>
+          </div>
         </div>
         {this.state.youWon ? youWonScreen() : ""}
         {this.state.livesLeft ? "" : youLostScreen()}
@@ -156,7 +211,8 @@ App.defaultProps = {
     "lemon",
     "orange",
     "pear",
-  ]
+  ],
+  alphabet: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 }
 
 export default App;
