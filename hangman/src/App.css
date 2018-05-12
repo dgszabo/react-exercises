@@ -73,12 +73,18 @@
   align-items: center;
 }
 
-.keyboard {
+.keyboard .row {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  max-width: 500px;
+  margin: auto;
 }
 
 .container h5 {
   min-height: 24px;
+}
+
+.hide {
+  opacity: 0;
 }

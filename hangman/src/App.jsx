@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Key from './Key'
+import Key from './Key';
+import words from 'an-array-of-english-words';
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    let word = this.props.words[Math.floor(this.props.words.length * Math.random())];
+    let word = words[Math.floor(words.length * Math.random())];
     let letters = {}
     word.split('').forEach(el => {
       if(!letters[el]) {
@@ -74,7 +75,7 @@ class App extends Component {
       lastWrongLetter: "",
       guessedLetters: [],
     }
-    newState.word = this.props.words[Math.floor(this.props.words.length * Math.random())];
+    newState.word = words[Math.floor(words.length * Math.random())];
     let letters = newState.letters
     newState.word.split('').forEach(el => {
       if(!letters[el]) {
@@ -154,7 +155,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          <h2>The Ultimate Hangman Game</h2>
+          <h1 class="mt-5">The Ultimate Hangman Game</h1>
           <br/>
           <img src={require("./stages/" + this.state.livesLeft + ".jpg")} alt="hangman" />
           <br/>
