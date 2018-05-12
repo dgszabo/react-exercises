@@ -76,4 +76,9 @@
 .keyboard {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+}
+
+.container h5 {
+  min-height: 24px;
 }

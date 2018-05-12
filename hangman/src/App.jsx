@@ -8,14 +8,12 @@ class App extends Component {
     this.state = {
       word: "",
       letters: {},
-      livesLeft: 5,
+      livesLeft: 7,
       guess: "",
       youWon: false,
       lastWrongLetter: "",
       guessedLetters: [],
     }
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
     this.restart = this.restart.bind(this);
   }
 
@@ -31,35 +29,6 @@ class App extends Component {
     });
     this.setState({ word, letters })
   }
-
-  // handleChange(event) {
-  //   this.setState({ [event.target.name]: event.target.value });
-  // }
-
-  // handleSubmit(event) {
-  //   event.preventDefault();
-  //   let guess = this.state.guess.toLowerCase();
-  //   event.target.reset();
-  //   if(this.state.letters[guess] && this.state.letters[guess] > 0) {
-  //     this.setState(prevState => {
-  //       let newState = {...prevState}
-  //       newState.letters[guess] = 0;
-  //       newState.lastWrongLetter = "";
-  //       let score = Object.values(this.state.letters).reduce((sum, a) => {return sum + a}, 0)
-  //       if(score === 0) {
-  //         newState.youWon = true;
-  //       }
-  //       return newState;
-  //     });
-  //   } else {
-  //     this.setState(prevState => {
-  //       let newState = {...prevState};
-  //       newState.lastWrongLetter = guess;
-  //       newState.livesLeft--;
-  //       return newState;
-  //     });
-  //   }
-  // }
 
   handleKeyPress(key, event) {
     event.preventDefault();
@@ -99,7 +68,7 @@ class App extends Component {
     let newState = {
       word: "",
       letters: {},
-      livesLeft: 5,
+      livesLeft: 7,
       guess: "",
       youWon: false,
       lastWrongLetter: "",
@@ -138,6 +107,8 @@ class App extends Component {
     let wrongLetterMessage = () => {
       if(this.state.lastWrongLetter !== "") {
         return <h5>there are no more {this.state.lastWrongLetter}'s in this word</h5>
+      } else {
+        return <h5></h5>
       }
     }
 
@@ -183,15 +154,18 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          <h2>Take a guess!</h2>
+          <h2>The Ultimate Hangman Game</h2>
           <br/>
-            <div className="row letter-row d-flex justify-content-center">
-              {displayedLetters}
-            </div>
+          <img src={require("./stages/" + this.state.livesLeft + ".jpg")} alt="hangman" />
+          <br/>
+          <br/>
+          <h3>You have {this.state.livesLeft} lives left!</h3>
+          <div className="row letter-row d-flex justify-content-center">
+            {displayedLetters}
+          </div>
           <br/>
             {wrongLetterMessage()}
           <br/>
-          <h3>You have {this.state.livesLeft} lives left!</h3>
           <div className="container keyboard">
             <div className="row">
               {this.props.alphabet.map(letter => <Key letter={letter} keyPress={this.handleKeyPress.bind(this, letter)} />)}
